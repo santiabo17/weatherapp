@@ -15,9 +15,11 @@ function App() {
 
   const [searching, setSearching] = React.useState(false);
 
-  const [doloresWeather, setDoloresWeather] = React.useState(null);
+  const [city, setCity] = React.useState('Dolores UY')
 
-  const [weather, setWeather] = React.useState(null)
+  const [weather, setWeather] = React.useState(null);
+
+  const [principalCities, setPrincipalCities] = React.useState(null);
 
   // React.useEffect(() => {
   //   fetch('http://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q=Dolores Uruguay')
@@ -26,13 +28,23 @@ function App() {
   // }, [])
 
   React.useEffect(() => {
-    fetch('http://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q=Dolores Uruguay&days=6')
+    fetch('http://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q='+city+'&days=6')
     .then(response => response.json())
     .then(data => setWeather(data))
-  }, [])
-  
+  }, [city])
+
 
   console.log(weather);
+
+  React.useEffect(() => {
+    fetch("https://api.api-ninjas.com/v1/city?min_population=1000000&limit=12", {
+      method: 'GET',
+      headers: {'X-Api-Key': 'xtJgZu646g1Hkpv6J+2cSw==8cZj6ppUaVlUTOgE'},
+    })
+    .then(response => response.json())
+    .then(result => setPrincipalCities(result))
+  }, [])
+  
 
   // React.useEffect(() => {
   //   const daysAfter = []
@@ -97,14 +109,15 @@ function App() {
         name={weather?.location.name}
         region={weather?.location.region} 
         temperature={weather?.current.temp_c} 
+        wind = {weather?.current.wind_kph}
         condition={weather?.current.condition.text}
         icon={weather?.current.condition.icon}
-        >
+      >
       </SelectedCity>
       <TodayData>
         {weather?.forecast.forecastday[0].hour.map((day) => {
           return <TodayDataCard 
-                    hour={day.time} 
+                    hour={day.time}
                     temperature={day.temp_c} 
                     icon={day.condition.icon}
                   />
@@ -124,9 +137,18 @@ function App() {
         })}
       </NextDaysData>
       <CityContainer>
-        <CityCard name="Río de Janeiro" temperature="20°C"/>
-        <CityCard name="Tokio" temperature="12°C"/>
-        <CityCard name="Moscu" temperature="2°C"/>
+        {principalCities?.map(city => {
+          return (
+            <CityCard 
+              name={city.name}
+              onCity={() => {
+                setCity(city.name + ' ' + city.country)
+                }                
+              }
+            />
+          )
+            
+        })}
       </CityContainer>
     </body>
     

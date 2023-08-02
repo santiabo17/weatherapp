@@ -26,11 +26,11 @@ function NextDaysDataCard (props) {
             break;
     }
     return (
-        <div className="bg-green-400 flex flex-col p-2 text-base text-center rounded-xl mb-3 w-full">
+        <div className="bg-green-400 flex flex-col p-2 text-base text-center rounded-xl mb-3 w-1/5">
             <p className="font-bold text-xl">{dia}</p>
             <p>Min: {props.minTemp}</p>
             <p>Max: {props.maxTemp}</p>
-            <img src={props.icon}/>
+            <img className="w-20 h-20" src={props.icon}/>
             <p>27 km/h</p>
         </div>
     )
