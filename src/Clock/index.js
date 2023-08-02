@@ -1,6 +1,7 @@
-function Clock() {
+function Clock(props) {
+    const horabien = props.hour?.substring(props.hour?.length-5);
     return(
-        <h1 className="text-8xl">23:22</h1>
+        <h1 className="text-8xl">{horabien}</h1>
     )
 }
 
