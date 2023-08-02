@@ -1,0 +1,4 @@
+.contenedor {
+    background: linear-gradient(135deg, rgba(256, 256, 256, 0.1), rgba(256, 256, 256, 0));
+    backdrop-filter: blur(10px);
+}

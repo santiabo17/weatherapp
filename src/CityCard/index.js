@@ -13,14 +13,14 @@ function CityCard(props){
       console.log(cityData);
 
     return(
-        <div className="bg-green-300 h-40 w-40 flex flex-col items-center justify-center cursor-pointer"
+        <div className="bg-blue-300 bg-opacity-20 window-filter h-40 w-40 flex flex-col items-center rounded-xl justify-center cursor-pointer"
         onClick={() => props.onCity()}
         >
             <p>{cityData?.location.name}</p>
             <p>{cityData?.location.country}</p>
-            <p>{cityData?.current.temp_c}</p>
-            <p>{cityData?.current.wind_kph}</p>
-            <img src={cityData?.current.condition.icon}/>
+            <p>{cityData?.current.temp_c}°C</p>
+            <p>{cityData?.current.wind_kph} km/h</p>
+            <img className="w-12" src={cityData?.current.condition.icon}/>
             
         </div>
     )

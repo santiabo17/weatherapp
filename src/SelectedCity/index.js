@@ -1,10 +1,31 @@
+import './SelectedCity.css'
+import { TemperatureIcon } from '../Icons/TemperatureIcon';
+import { WindIcon } from '../Icons/WindIcon.js';
+
 function SelectedCity(props) {
     return (
-        <div className="bg-gray-200 h-48 w-1/4 flex flex-col items-center justify-center m-6 relative">
-            <p className="mb-2 text-lg">{props.name}, {props.region}</p>
-            <p className="text-4xl mb-2 font-medium">{props.temperature} C {props.wind} kph</p>
-            <p className="text-xl font-light font-normal mb-8">{props.condition}</p>
-            <img className=" absolute bottom-0 " src={props.icon}></img>
+        <div className="bg-gray-200 h-64 w-1/4 flex flex-col items-center justify-center m-3 relative contenedor">
+            <p className="text-lg">{props.name}, {props.region}</p>
+            <p className='mb-2'>{props.country}</p>
+            <div className='flex gap-2'>
+                <div className='w-10'>
+                    <TemperatureIcon/>
+                </div>
+                <span className="text-4xl mb-2 font-medium ">{props.temperature} °C </span>
+            </div>
+            <div className='flex gap-2'>
+                <div className='w-10'>
+                   <WindIcon/>
+                </div>
+                <span className="text-4xl mb-2 font-medium">{props.wind} km/h</span>
+            </div>
+            
+            
+            <div className='flex items-center gap-2 '>
+                <span className="text-xl font-normal ">{props.condition}</span>
+                <img className="w-15" src={props.icon}></img>
+            </div>
+            
         </div>
     )
 }

@@ -15,6 +15,8 @@ function App() {
 
   const [searching, setSearching] = React.useState(false);
 
+  const [possibleResults, setPossibleResults] = React.useState(null);
+
   const [city, setCity] = React.useState('Dolores UY')
 
   const [weather, setWeather] = React.useState(null);
@@ -45,6 +47,34 @@ function App() {
     .then(result => setPrincipalCities(result))
   }, [])
   
+  // React.useEffect(() => {
+  //   fetch("https://api.api-ninjas.com/v1/city?name=Dol&limit=5", {
+  //     method: 'GET',
+  //     headers: {'X-Api-Key': 'xtJgZu646g1Hkpv6J+2cSw==8cZj6ppUaVlUTOgE'},
+  //   })
+  //   .then(response => response.json())
+  //   .then(result => console.log(result))
+  // }, [])
+
+  React.useEffect(() => {
+    console.log('buscando: ')
+    console.log(searching)
+  }, [searching])
+
+  React.useEffect(() => {
+    if(searching?.length > 3){
+      fetch("https://api.api-ninjas.com/v1/city?name="+searching+"&limit=5", {
+        method: 'GET',
+        headers: {'X-Api-Key': 'xtJgZu646g1Hkpv6J+2cSw==8cZj6ppUaVlUTOgE'},
+      })
+      .then(response => response.json())
+      .then(result => setPossibleResults(result))
+    } else {
+      setPossibleResults(null)
+    }
+  }, [searching])
+  
+
 
   // React.useEffect(() => {
   //   const daysAfter = []
@@ -101,13 +131,19 @@ function App() {
 
 
   return (
-    <body className='flex flex-col items-center'> 
+    <body className='flex flex-col items-center bg-blue-950 text-white'> 
       <h1 className='text-7xl text-center mt-7 mb-5'>WeatherApp</h1>
-      <CitySearch></CitySearch>
+      <CitySearch
+        possibleResults={possibleResults}
+        setSearching={setSearching}
+        searching={searching}
+        setCity={setCity}
+      />
       <Clock hour={weather?.location.localtime}></Clock>
       <SelectedCity 
         name={weather?.location.name}
         region={weather?.location.region} 
+        country={weather?.location.country}
         temperature={weather?.current.temp_c} 
         wind = {weather?.current.wind_kph}
         condition={weather?.current.condition.text}
@@ -129,6 +165,7 @@ function App() {
             return <NextDaysDataCard 
             maxTemp={dia.day.maxtemp_c}
             minTemp={dia.day.mintemp_c}
+            wind = {dia.day.maxwind_kph}
             icon={dia.day.condition.icon}
             date={dia.date}
             />
