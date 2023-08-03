@@ -13,7 +13,7 @@ import { NextDaysDataCard } from '../NextDaysDataCard';
 
 function App() {
 
-  const [searching, setSearching] = React.useState(false);
+  const [searching, setSearching] = React.useState('');
 
   const [possibleResults, setPossibleResults] = React.useState(null);
 
@@ -22,6 +22,8 @@ function App() {
   const [weather, setWeather] = React.useState(null);
 
   const [principalCities, setPrincipalCities] = React.useState(null);
+
+  const [hora, setHora] = React.useState(null);
 
   // React.useEffect(() => {
   //   fetch('http://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q=Dolores Uruguay')
@@ -32,7 +34,11 @@ function App() {
   React.useEffect(() => {
     fetch('http://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q='+city+'&days=6')
     .then(response => response.json())
-    .then(data => setWeather(data))
+    .then(data => {
+      setWeather(data);
+      setHora(data.location.localtime.substring(data.location.localtime.length-5, data.location.localtime.length));
+    })
+
   }, [city])
 
 
@@ -73,7 +79,69 @@ function App() {
       setPossibleResults(null)
     }
   }, [searching])
+
   
+
+  console.log('hora:' + hora);
+
+  
+
+  function addMinute (horario) {
+    let currentHour = parseInt(weather?.location.localtime.substring(weather?.location.localtime.length-5, weather?.location.localtime.length-3));
+    let currentMinute = parseInt(weather?.location.localtime.substring(weather?.location.localtime.length-2, weather?.location.localtime.length));
+      
+    let addedHour;
+
+      if(currentMinute != 59){
+          currentMinute += 1;
+      } else {
+          currentMinute = 0;
+          currentHour += 1;
+      }
+      if (currentHour < 10 && currentMinute < 10){
+          addedHour = `0${currentHour}:0${currentMinute}`;
+      } else if (currentHour < 10){
+          addedHour = `0${currentHour}:${currentMinute}`;
+      } else if (currentMinute < 10) {
+          addedHour = `${currentHour}:0${currentMinute}`;
+      }
+
+      setHora(addedHour);
+  }
+
+    
+
+      function addMinute (hora) {
+        let currentHour = parseInt(hora.substring(0, hora.length-3));
+        let currentMinute = parseInt(hora.substring(hora.length-2, hora.length));
+
+        if(currentMinute != 59){
+            currentMinute += 1;
+        } else {
+            currentMinute = 0;
+            currentHour += 1;
+        }
+        
+        let addedHour = `${currentHour}:${currentMinute}`;
+
+        if (currentHour < 10 && currentMinute < 10){
+            addedHour = `0${currentHour}:0${currentMinute}`;
+        } else if (currentHour < 10){
+            addedHour = `0${currentHour}:${currentMinute}`;
+        } else if (currentMinute < 10) {
+            addedHour = `${currentHour}:0${currentMinute}`;
+        }
+
+        return(addedHour);
+      }
+
+    React.useEffect(() => {
+        const intervalId = setInterval(() => {
+          setHora(hora => addMinute(hora));
+        }, 60000)
+
+        return () => clearInterval(intervalId);
+    }, [])
 
 
   // React.useEffect(() => {
@@ -131,7 +199,7 @@ function App() {
 
 
   return (
-    <body className='flex flex-col items-center bg-blue-950 text-white'> 
+    <body className='flex flex-col items-center bg-blue-950 text-white h-screen'> 
       <h1 className='text-7xl text-center mt-7 mb-5'>WeatherApp</h1>
       <CitySearch
         possibleResults={possibleResults}
@@ -139,7 +207,7 @@ function App() {
         searching={searching}
         setCity={setCity}
       />
-      <Clock hour={weather?.location.localtime}></Clock>
+      <Clock hour={hora}></Clock>
       <SelectedCity 
         name={weather?.location.name}
         region={weather?.location.region} 
