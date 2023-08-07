@@ -45,7 +45,7 @@ function App() {
   console.log(weather);
 
   React.useEffect(() => {
-    fetch("https://api.api-ninjas.com/v1/city?min_population=1000000&limit=12", {
+    fetch("https://api.api-ninjas.com/v1/city?min_population=1000000&limit=7", {
       method: 'GET',
       headers: {'X-Api-Key': 'xtJgZu646g1Hkpv6J+2cSw==8cZj6ppUaVlUTOgE'},
     })
@@ -199,8 +199,8 @@ function App() {
 
 
   return (
-    <body className='flex flex-col items-center bg-blue-950 text-white h-screen'> 
-      <h1 className='text-7xl text-center mt-7 mb-5'>WeatherApp</h1>
+    <body className='flex flex-col items-center bg-blue-950 text-white min-h-full'> 
+      <h1 className='text-6xl text-center mt-4 mb-5 lg:text-7xl'>WeatherApp</h1>
       <CitySearch
         possibleResults={possibleResults}
         setSearching={setSearching}
