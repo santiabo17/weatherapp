@@ -2,7 +2,7 @@
 function CityContainer (props) {
     return (
         <div className=" w-11/12  mt-7 overflow-auto relative lg:2/3 2xl:w-full 2xl:overflow-hidden 2xl:mt-0">
-            <div className=" flex justify-center gap-3 flex-wrap my-5 text-white px-8 ">
+            <div className="overflow-auto md:overflow-hidden flex md:justify-center gap-3 md:flex-wrap my-3 text-white px-2 md:px-8 ">
                 {props.children}
             </div>
         </div>

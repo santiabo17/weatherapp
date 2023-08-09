@@ -40,7 +40,7 @@ function Clock(props) {
     // }, [])
     
     return(
-        <h1 className="text-7xl">{props.hour}</h1>
+        <h1 className="text-7xl mb-5 2xl:mb-0">{!!props.hour ? props.hour : '00:00'}</h1>
     )
 }
 

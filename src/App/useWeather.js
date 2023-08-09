@@ -16,9 +16,8 @@ function useWeather () {
         .then(response => response.json())
         .then(data => {
           setWeather(data);
-          setHora(data.location.localtime.substring(data.location.localtime.length-5, data.location.localtime.length));
+          setHora(addMinute(data.location.localtime.substring(data.location.localtime.length-5, data.location.localtime.length)));
         })
-    
       }, [city])
     
 
@@ -30,16 +29,6 @@ function useWeather () {
         .then(response => response.json())
         .then(result => setPrincipalCities(result))
       }, [])
-
-      React.useEffect(() => {
-        fetch('http://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q='+city+'&days=6')
-        .then(response => response.json())
-        .then(data => {
-          setWeather(data);
-          setHora(data.location.localtime.substring(data.location.localtime.length-5, data.location.localtime.length));
-        })
-    
-      }, [city])
 
       React.useEffect(() => {
         console.log('buscando: ')
@@ -65,54 +54,57 @@ function useWeather () {
     
       
     
-      function addMinute (horario) {
-        let currentHour = parseInt(weather?.location.localtime.substring(weather?.location.localtime.length-5, weather?.location.localtime.length-3));
-        let currentMinute = parseInt(weather?.location.localtime.substring(weather?.location.localtime.length-2, weather?.location.localtime.length));
+      // function addMinute (horario) {
+      //   let currentHour = parseInt(weather?.location.localtime.substring(weather?.location.localtime.length-5, weather?.location.localtime.length-3));
+      //   let currentMinute = parseInt(weather?.location.localtime.substring(weather?.location.localtime.length-2, weather?.location.localtime.length));
           
-        let addedHour;
+      //   let addedHour;
     
-          if(currentMinute != 59){
-              currentMinute += 1;
-          } else {
-              currentMinute = 0;
-              currentHour += 1;
-          }
-          if (currentHour < 10 && currentMinute < 10){
-              addedHour = `0${currentHour}:0${currentMinute}`;
-          } else if (currentHour < 10){
-              addedHour = `0${currentHour}:${currentMinute}`;
-          } else if (currentMinute < 10) {
-              addedHour = `${currentHour}:0${currentMinute}`;
-          }
+      //     if(currentMinute != 59){
+      //         currentMinute += 1;
+      //     } else {
+      //         currentMinute = 0;
+      //         currentHour += 1;
+      //     }
+      //     if (currentHour < 10 && currentMinute < 10){
+      //         addedHour = `0${currentHour}:0${currentMinute}`;
+      //     } else if (currentHour < 10){
+      //         addedHour = `0${currentHour}:${currentMinute}`;
+      //     } else if (currentMinute < 10) {
+      //         addedHour = `${currentHour}:0${currentMinute}`;
+      //     }
     
-          setHora(addedHour);
-      }
+      //     setHora(addedHour);
+      // }
     
         
     
-          function addMinute (hora) {
-            let currentHour = parseInt(hora.substring(0, hora.length-3));
-            let currentMinute = parseInt(hora.substring(hora.length-2, hora.length));
-    
-            if(currentMinute != 59){
-                currentMinute += 1;
-            } else {
-                currentMinute = 0;
-                currentHour += 1;
-            }
-            
-            let addedHour = `${currentHour}:${currentMinute}`;
-    
-            if (currentHour < 10 && currentMinute < 10){
-                addedHour = `0${currentHour}:0${currentMinute}`;
-            } else if (currentHour < 10){
-                addedHour = `0${currentHour}:${currentMinute}`;
-            } else if (currentMinute < 10) {
-                addedHour = `${currentHour}:0${currentMinute}`;
-            }
-    
-            return(addedHour);
-          }
+      function addMinute(hora) {
+        let currentHour = parseInt(hora.substring(0, hora.length-3));
+        let currentMinute = parseInt(hora.substring(hora.length-2, hora.length));
+
+        if(currentMinute != 59){
+            currentMinute += 1;
+        } else {
+            currentMinute = 0;
+            currentHour += 1;
+        }
+        
+        let addedHour = `${currentHour}:${currentMinute}`;
+
+        if (currentHour < 10 && currentMinute < 10){
+            console.log('a');
+            addedHour = `0${currentHour}:0${currentMinute}`;
+        } else if (currentHour < 10){
+            console.log('b');
+            addedHour = `0${currentHour}:${currentMinute}`;
+        } else if (currentMinute < 10) {
+            console.log('c');
+            addedHour = `${currentHour}:0${currentMinute}`;
+        }
+
+        return(addedHour);
+      }
     
         React.useEffect(() => {
             const intervalId = setInterval(() => {
