@@ -12,7 +12,7 @@ function useWeather () {
     
 
     React.useEffect(() => {
-        fetch('http://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q='+city+'&days=6')
+        fetch('https://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q='+city+'&days=6')
         .then(response => response.json())
         .then(data => {
           setWeather(data);
