@@ -4,13 +4,13 @@ function CitySearch(props) {
 
     function search (city) {
         props.setCity(city);
-        props.setSearching('')
+        props.setSearching('');
     }
 
     return(
         <div className="realative w-2/3 mt-4 mb-5 2xl:mt-3 2xl:mb-2 md:w-2/4 2xl:w-1/4">
             <div className="flex w-full  items-center">
-                <input placeholder="Que ciudad quires buscar?" className="bg-white bg-opacity-10 window-filter p-2 w-full"
+                <input placeholder="Qué ciudad quieres buscar?" className="bg-white bg-opacity-10 window-filter p-2 w-full"
                 value={props.searching}
                 onChange={(event) => props.setSearching(event.target.value)}
                 />

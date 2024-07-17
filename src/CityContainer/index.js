@@ -1,8 +1,16 @@
+import React from "react";
+import { Loader } from "../Loader/Loader";
 
 function CityContainer (props) {
     return (
-        <div className=" w-11/12 h-48  mt-7 overflow-auto relative lg:2/3 2xl:w-full 2xl:overflow-hidden 2xl:mt-0">
-            <div className="overflow-auto md:overflow-hidden flex md:justify-center gap-3 md:flex-wrap my-3 text-white px-2 md:px-8 ">
+        <div className=" w-11/12 h-48 mt-7 relative lg:2/3 2xl:w-full 2xl:overflow-x-hidden 2xl:mt-1">
+            <div className="overflow-x-auto overflow-y-hidden h-40 md:overflow-x-hidden flex md:justify-center gap-3 md:flex-wrap my-3 text-white px-2 md:px-8 2xl: m-0 ">
+                {!props.children && 
+                <div className="flex  gap-5 items-center">
+                    <span className="text-5xl m-auto">Cargando...</span>
+                    <Loader></Loader>
+                </div>
+                }
                 {props.children}
             </div>
         </div>

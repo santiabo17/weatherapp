@@ -12,7 +12,7 @@ function useWeather () {
     
 
     React.useEffect(() => {
-        fetch('https://api.weatherapi.com/v1/forecast.json?key=c2b0baff920b421db8c140210230208&q='+city+'&days=6')
+        fetch('https://api.weatherapi.com/v1/forecast.json?key=d567c41c86e947318de201221230709&q='+city+'&days=8')
         .then(response => response.json())
         .then(data => {
           setWeather(data);
@@ -42,7 +42,7 @@ function useWeather () {
             headers: {'X-Api-Key': 'xtJgZu646g1Hkpv6J+2cSw==8cZj6ppUaVlUTOgE'},
           })
           .then(response => response.json())
-          .then(result => setPossibleResults(result))
+          .then(result => {setPossibleResults(result); console.log(result)})
         } else {
           setPossibleResults(null)
         }
