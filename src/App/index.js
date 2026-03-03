@@ -16,11 +16,9 @@ import { Loader } from '../Loader/Loader';
 function App() {
 
   const {principalCities, setCity, hora, weather, searching, setSearching, possibleResults} = useWeather();
-  console.log("clima:"); 
-  console.log(weather);
 
   return (
-    <body className='flex flex-col items-center bg-blue-950 text-white min-h-screen'> 
+    <div className='flex flex-col items-center bg-blue-950 text-white min-h-screen'> 
       <h1 className='text-5xl sm:text-6xl text-center mt-4 mb-5 lg:text-7xl'>WeatherApp</h1>
       <CitySearch
         possibleResults={possibleResults}
@@ -42,6 +40,7 @@ function App() {
       <TodayData>
         {weather?.forecast.forecastday[0].hour.map((day) => {
           return <TodayDataCard 
+                    key={day.time}
                     hour={day.time}
                     temperature={day.temp_c} 
                     icon={day.condition.icon}
@@ -52,6 +51,7 @@ function App() {
         {weather?.forecast.forecastday.map((dia,index) => {
           if (index != 0){
             return <NextDaysDataCard 
+            key={index}
             maxTemp={dia.day.maxtemp_c}
             minTemp={dia.day.mintemp_c}
             wind = {dia.day.maxwind_kph}
@@ -66,6 +66,7 @@ function App() {
         {principalCities?.map(city => {
           return (
             <CityCard 
+              key={city.name}
               name={city.name}
               onCity={() => {
                 setCity(city.name + ' ' + city.country)
@@ -76,7 +77,7 @@ function App() {
             
         })}
       </CityContainer>
-    </body>
+    </div>
     
   );
 }

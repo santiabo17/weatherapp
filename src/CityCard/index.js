@@ -10,8 +10,6 @@ function CityCard(props){
         .then(data => setCityData(data))
       }, [])
 
-    //   console.log(cityData);
-
     return(
         <div className=" bg-blue-300 bg-opacity-20 window-filter h-40 flex flex-col items-center rounded-xl justify-between cursor-pointer p-2"
         onClick={() => props.onCity()}

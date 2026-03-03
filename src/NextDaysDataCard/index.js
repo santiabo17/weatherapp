@@ -3,7 +3,6 @@ import { WindIcon } from "../Icons/WindIcon";
 
 function NextDaysDataCard (props) {
     const fecha = new Date(props.date);
-    console.log(fecha.getDay());
     let dia;
     switch(fecha.getDay()){
         case 0: 
